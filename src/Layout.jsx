@@ -1,15 +1,15 @@
-import { Outlet, useLocation } from "react-router-dom"
+import { Outlet} from "react-router-dom"
 import Header from "./components/Home/header"
 import { ToastContainer } from "react-toastify"
+import Footer from "./components/Home/footer";
 
 function Layout() {
-  const location = useLocation();
-  const noHeaderRoutes = ['/login', '/register'];
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-      {!noHeaderRoutes.includes(location.pathname) && <Header />}
+      <Header />
       <Outlet />
+      <Footer />
     </>
   )
 }

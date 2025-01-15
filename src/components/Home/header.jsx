@@ -41,7 +41,7 @@ const Header = () => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="m-auto">
                             <Link className="nav-link" to="/"> Home </Link>
-                            <Link className="nav-link" to="/"> Products </Link>
+                            <Link className="nav-link" to="/product"> Products </Link>
                             <Link className="nav-link" to="/"> Cart <Image src={cart} alt="" /> </Link>
                         </Nav>
                         {!token && <>

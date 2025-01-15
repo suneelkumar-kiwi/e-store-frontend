@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const CreateProduct = ({ show, handleClose }) => {
-    const [categories, setCategories] = useState(null);
+    const [categoryList, setCategoryList] = useState([]);
     const [showLoader, setShowLoader] = useState(false)
     const [selectedOption, setSelectedOption] = useState('');
 
@@ -32,7 +32,7 @@ const CreateProduct = ({ show, handleClose }) => {
 
     useEffect(() => {
         axios.get(`${API_BASE_URL}/product-category`).then((res) => {
-            setCategories(res?.data)
+            setCategoryList(res?.data)
         })
     }, [ ]);
 
@@ -120,7 +120,7 @@ const CreateProduct = ({ show, handleClose }) => {
                                     className="form-select"
                                 >
                                     <option> Select category </option>
-                                    {categories.map((category, i) => (
+                                    {categoryList?.map((category, i) => (
                                         <option key={i} value={category?.name}> {category?.name} </option>
                                     ))}
                                 </select>
