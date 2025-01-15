@@ -1,14 +1,27 @@
-import { Button, Image, Nav, Navbar } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Dropdown, Image, Nav, Navbar } from "react-bootstrap";
 import { cart, logo } from "../../utils/icons";
 import useToken from "../../hooks/useToken";
 import { Link } from "react-router-dom";
+import CreateProduct from "../Admin/createProduct";
+import CreateProductCategory from "../Admin/createProductCategory";
 
 const Header = () => {
-    const {token, removeToken} = useToken();
+    const [showProductModal, setShowProductModal] = useState(false);
+    const [showCategoryModal, setShowCategoryModal] = useState(false);
+    const { token, removeToken } = useToken();
 
     const handleLogout = () => {
         removeToken();
     };
+
+    const handleCreateProduct = () => {
+        setShowProductModal(!showProductModal);
+    }
+
+    const handleCreateCategory = () => {
+        setShowCategoryModal(!showCategoryModal);
+    }
 
     // Get User Name Function
     const loginUser = () => {
@@ -18,7 +31,8 @@ const Header = () => {
     }
 
     return (
-        <header>
+        <>
+            <header>
                 <Navbar expand="lg">
                     <Navbar.Brand href="/">
                         <Image width={180} src={logo} alt="" />
@@ -36,11 +50,23 @@ const Header = () => {
                         </>}
                         {token && <>
                             <Button variant="outline-danger me-3" onClick={() => handleLogout()}> Logout </Button>
-                            <div className="login-user">{loginUser()}</div>
+                            <Dropdown className="user-dropdown" align="end"                             >
+                                <Dropdown.Toggle className="login-user" variant="success" id="dropdown-basic">
+                                    {loginUser()}
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                    <Dropdown.Item className="nav-link" onClick={() => handleCreateProduct()}> Create Product </Dropdown.Item>
+                                    <Dropdown.Item className="nav-link" onClick={() => handleCreateCategory()}> Create Product Category </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
                         </>}
                     </Navbar.Collapse>
                 </Navbar>
             </header>
+            <CreateProduct show={showProductModal} handleClose={() => handleCreateProduct()} />
+            <CreateProductCategory show={showCategoryModal} handleClose={() => handleCreateCategory()} />
+        </>
     )
 }
 export default Header;

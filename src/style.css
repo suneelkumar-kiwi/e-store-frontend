@@ -81,10 +81,12 @@ header .navbar .btn-outline-primary{
 .form-group .text-danger {
   font-size: 14px;
 }
-.form-group .form-control{
+.form-group .form-control,
+.form-group .form-select{
   padding: 10px 15px;
 }
-.error-field .form-control {
+.error-field .form-control,
+.error-field .form-select {
   border-color: #dc3545;
 }
 .no-account {
@@ -123,4 +125,51 @@ header .navbar .btn-outline-primary{
   color: #fff;
   font-size: 13px;
   font-weight: 500;
+}
+.user-dropdown .dropdown-item{
+  padding: 6px 20px;
+  font-size: 15px;
+  color: #555;
+}
+
+/* Yhhl */
+.form-modal .modal-header {
+  border-bottom: 0;
+  padding: 20px 30px 0;
+}
+.form-modal  .modal-body {
+  padding: 20px 30px 30px;
+}
+.form-modal .btn-primary {
+  min-width: 200px;
+  display: flex;
+  justify-self: flex-end;
+  justify-content: center;
+  padding: 10px;
+  margin-top: 25px;
+}
+.modal-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #b0b0b099;
+  z-index: 1;
+  border-radius: 6px;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
