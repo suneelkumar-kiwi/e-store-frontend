@@ -1,16 +1,13 @@
-import { Button, Image } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import InputField from "./inputField";
 import { Form, Formik } from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
 import API_BASE_URL from "../../utils/constants";
 import { toast } from "react-toastify";
-import useToken from "../../hooks/useToken";
-import { logo } from "../../utils/icons";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-    const { setNewToken } = useToken();
     const navigate = useNavigate();
 
     const initialValue = {
@@ -29,7 +26,7 @@ const SignIn = () => {
                 username: userDetail.username,
                 password: userDetail.password,
             });
-            setNewToken(JSON.stringify(response?.data));
+            localStorage.setItem('authUser', JSON.stringify(response?.data))
             navigate('/');
             toast.success("Login sucessfully.");
         } catch (error) {
@@ -43,7 +40,6 @@ const SignIn = () => {
     return (
         <div className="auth-page">
             <div className="auth-container">
-                <Link to='/'> <Image width={180} src={logo} alt="" /> </Link>
                 <div className="white-box">
                     <h1> Welcome Back! </h1>
                     <Formik

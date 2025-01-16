@@ -25,13 +25,11 @@ const Home = () => {
         slidesToShow: 1,
         slidesToScroll: 1
     };
-
-    console.log(products);
     return (
         <>
             <section className="category-banner">
                 <Slider {...settings}>
-                    {categories?.map((category) => (
+                    {categories?.slice(0, 3).map((category) => (
                         <div key={category.id} className="slide-item">
                             <img className="img-fluid" src={category?.imageUrl} alt={category?.name} />
                             <h1> {category?.description} </h1>
@@ -65,7 +63,7 @@ const Home = () => {
                         <Col sm={12}>
                             <h2 className="section-heading"> The Most Bought Product </h2>
                         </Col>
-                        {products?.map((product) => (
+                        {products?.slice(0, 3).map((product) => (
                             <Col key={product.id} sm={4}>
                                 <div className="product-item">
                                     <img className="img-fluid" src={product?.imageUrl} alt={product?.name} />

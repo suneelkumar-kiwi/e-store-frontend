@@ -41,7 +41,7 @@ header .navbar .btn-outline-primary{
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 138px);
 }
 .auth-container{
   max-width: 460px;
@@ -317,4 +317,26 @@ footer p {
 }
 footer p a{
   text-decoration: none;
+}
+
+/* Product list page style */
+.product-list-pg {
+  padding-bottom: 30px;
+}
+.product-list-pg .product-item {
+  margin-bottom: 30px;
+}
+.product-list-pg .product-item img {
+  height: 190px;
+  object-fit: contain;
+  background-color: #fff;
+}
+.breadcrumb {
+  padding: 15px 0;
+  border-bottom: 1px solid #3b3b3b;
+  margin-bottom: 50px;
+}
+.breadcrumb .breadcrumb-item,
+.breadcrumb-item+.breadcrumb-item::before{
+  color: #fff;
 }

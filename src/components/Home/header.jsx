@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Button, Dropdown, Image, Nav, Navbar } from "react-bootstrap";
 import { cart, logo } from "../../utils/icons";
-import useToken from "../../hooks/useToken";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateProduct from "../Admin/createProduct";
 import CreateProductCategory from "../Admin/createProductCategory";
 
 const Header = () => {
+    const navigate = useNavigate();
     const [showProductModal, setShowProductModal] = useState(false);
     const [showCategoryModal, setShowCategoryModal] = useState(false);
-    const { token, removeToken } = useToken();
 
     const handleLogout = () => {
-        removeToken();
+        localStorage.removeItem('authUser');
+        navigate('/')
     };
 
     const handleCreateProduct = () => {
@@ -23,9 +23,13 @@ const Header = () => {
         setShowCategoryModal(!showCategoryModal);
     }
 
+    const token = () => {
+        return JSON.parse(localStorage.getItem('authUser'));
+    }
+
     // Get User Name Function
     const loginUser = () => {
-        let userObj = JSON.parse(token);
+        let userObj = token();
         let user = userObj.name.split(' ').map(l => l[0]).join('');
         return user;
     }
@@ -44,12 +48,11 @@ const Header = () => {
                             <Link className="nav-link" to="/product"> Products </Link>
                             <Link className="nav-link" to="/"> Cart <Image src={cart} alt="" /> </Link>
                         </Nav>
-                        {!token && <>
+                        {!token() && <>
                             <Link to="/login" className="btn btn-outline-primary">Sign In </Link>
                             <Link to="/register" className="btn btn-primary"> Sign Up </Link>
                         </>}
-                        {token && <>
-                            <Button variant="outline-danger me-3" onClick={() => handleLogout()}> Logout </Button>
+                        {token() && <>
                             <Dropdown className="user-dropdown" align="end"                             >
                                 <Dropdown.Toggle className="login-user" variant="success" id="dropdown-basic">
                                     {loginUser()}
@@ -60,6 +63,7 @@ const Header = () => {
                                     <Dropdown.Item className="nav-link" onClick={() => handleCreateCategory()}> Create Product Category </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
+                            <Button variant="outline-danger ms-3" onClick={() => handleLogout()}> Logout </Button>
                         </>}
                     </Navbar.Collapse>
                 </Navbar>
