@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Dropdown, Image, Nav, Navbar } from "react-bootstrap";
 import { cart, logo } from "../../utils/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import CreateProduct from "../Admin/createProduct";
 import CreateProductCategory from "../Admin/createProductCategory";
 
@@ -29,8 +29,7 @@ const Header = () => {
 
     // Get User Name Function
     const loginUser = () => {
-        let userObj = token();
-        let user = userObj.name.split(' ').map(l => l[0]).join('');
+        let user = token().name.split(' ').map(l => l[0]).join('');
         return user;
     }
 
@@ -44,13 +43,13 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="m-auto">
-                            <Link className="nav-link" to="/"> Home </Link>
-                            <Link className="nav-link" to="/product"> Products </Link>
-                            <Link className="nav-link" to="/"> Cart <Image src={cart} alt="" /> </Link>
+                            <NavLink to="/"> Home </NavLink>
+                            <NavLink to="/products"> Products </NavLink>
+                            <NavLink to="/cart"> Cart <Image src={cart} alt="" /> </NavLink>
                         </Nav>
                         {!token() && <>
-                            <Link to="/login" className="btn btn-outline-primary">Sign In </Link>
-                            <Link to="/register" className="btn btn-primary"> Sign Up </Link>
+                            <NavLink to="/login" className="btn btn-outline-primary">Sign In </NavLink>
+                            <NavLink to="/register" className="btn btn-primary"> Sign Up </NavLink>
                         </>}
                         {token() && <>
                             <Dropdown className="user-dropdown" align="end"                             >
@@ -63,7 +62,7 @@ const Header = () => {
                                     <Dropdown.Item className="nav-link" onClick={() => handleCreateCategory()}> Create Product Category </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
-                            <Button variant="outline-danger ms-3" onClick={() => handleLogout()}> Logout </Button>
+                            <Button variant="outline-danger ms-4" onClick={() => handleLogout()}> Logout </Button>
                         </>}
                     </Navbar.Collapse>
                 </Navbar>

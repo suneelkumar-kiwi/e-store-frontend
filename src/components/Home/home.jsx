@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 import API_BASE_URL from "../../utils/constants";
 import Slider from "react-slick";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { addToCart } from "../../utils/apiCall";
+import { toast } from "react-toastify";
 
 const Home = () => {
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`${API_BASE_URL}/product-category`).then((res) => {
@@ -25,6 +28,18 @@ const Home = () => {
         slidesToShow: 1,
         slidesToScroll: 1
     };
+
+     const handleAddToCart = (e, item) => {
+        const userID = JSON.parse(localStorage.getItem('authUser'))?.id;
+        if(userID){
+            addToCart(item, userID);
+            navigate('/cart');
+        } else{
+            toast.info('Please login first.');
+            navigate('/login');
+        }
+    }
+
     return (
         <>
             <section className="category-banner">
@@ -49,7 +64,7 @@ const Home = () => {
                                     <img className="img-fluid" src={category?.imageUrl} alt={category?.name} />
                                     <div className="overlay">
                                         <h3> <span> Category: </span> {category?.name} </h3>
-                                        <Link to="/product"> Go to store </Link>
+                                        <Link to="/products"> Go to store </Link>
                                     </div>
                                 </div>
                             </Col>
@@ -73,7 +88,7 @@ const Home = () => {
                                         <p>{product?.description}</p>
                                         <div className="button-price">
                                             <span>₹ {product?.price}</span>
-                                            <Button type="button"> Add to cart </Button>
+                                            <Button type="button" onClick={(e) => handleAddToCart(e, product)}> Add to cart </Button>
                                         </div>
                                     </div>
                                 </div>

@@ -2,16 +2,31 @@ import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import API_BASE_URL from "../../utils/constants";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { addToCart } from "../../utils/apiCall";
+import { toast } from "react-toastify";
 
 const Product = () => {
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`${API_BASE_URL}/products`).then((res) => {
             setProducts(res?.data)
         });
     }, []);
+
+    const handleAddToCart = (e, item) => {
+        const userID = JSON.parse(localStorage.getItem('authUser'))?.id;
+        if(userID){
+            addToCart(item, userID);
+            navigate('/cart');
+        } else{
+            toast.info('Please login first.');
+            navigate('/login');
+        }
+    }
+
     return (
         <div className="product-list-pg">
             <Container>
@@ -40,7 +55,7 @@ const Product = () => {
                                             <p>{product?.description}</p>
                                             <div className="button-price">
                                                 <span>₹ {product?.price}</span>
-                                                <Button type="button"> Add to cart </Button>
+                                                <Button onClick={(e) => handleAddToCart(e, product)} type="button"> Add to cart </Button>
                                             </div>
                                         </div>
                                     </div>
